@@ -60,3 +60,7 @@ jobs:
         wget https://user-images.githubusercontent.com/541289/156629708-b1311906-9a34-4296-840c-58429f9a22d3.jpg \
           -O reference.jpg
         colorx content.jpg reference.jpg output.jpg
+        colorx --method lhm content.jpg reference.jpg output-lhm.jpg
+        colorx --method pccm content.jpg reference.jpg output-pccm.jpg
+        colorx --method reinhard content.jpg reference.jpg output-reinhard.jpg
+        colorx --method cwct content.jpg reference.jpg output-cwct.jpg

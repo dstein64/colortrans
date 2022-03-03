@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 
 
-METHODS = ('lhm', 'pccm', 'reinhard', 'cws')
+METHODS = ('lhm', 'pccm', 'reinhard', 'cwct')
 
 
 def transfer_reinhard(content, reference):
@@ -134,7 +134,7 @@ def transfer_pccm(content, reference):
 
 def transfer_cws(content, reference):
     """Transfers colors from a reference image to a content image using
-    channel-wise statistics.
+    channel-wise color transfer.
 
     content: NumPy array (HxWxC)
     reference: NumPy array (HxWxC)
