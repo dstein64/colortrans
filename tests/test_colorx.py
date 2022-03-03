@@ -15,7 +15,7 @@ class TestColorx(unittest.TestCase):
     """colorx tests"""
     def test_colorx(self):
         content = np.random.randint(256, size=(20, 30, 3), dtype=np.uint8)
-        reference = np.random.randint(256, size=(40, 50), dtype=np.uint8)
+        reference = np.random.randint(256, size=(40, 50, 3), dtype=np.uint8)
 
         for method in colorx.METHODS:
             func = getattr(colorx, f'transfer_{method}')
