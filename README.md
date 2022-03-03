@@ -3,7 +3,8 @@
 # colorx
 
 An implementation of various algorithms for transferring the colors from a reference image to a
-content image while preserving the qualitative appearance of the content image (color transfer).
+content image while preserving the qualitative appearance of the content image (i.e., color
+transfer).
 
 <div align="center">
   <a href="https://github.com/dstein64/media/blob/main/colorx/content.jpg?raw=true">
