@@ -5,11 +5,17 @@ import numpy as np
 from PIL import Image
 
 
-METHODS = ('reinhard', 'lhm', 'pccm', 'rgb')
+METHODS = ('lhm', 'pccm', 'reinhard', 'cws')
 
 
 def transfer_reinhard(content, reference):
-    # Convert HxWx3 image to a (H*W)x3 matrix.
+    """Transfers colors from a reference image to a content image using the
+    technique from Reinhard et al.
+
+    content: NumPy array (HxWxC)
+    reference: NumPy array (HxWxC)
+    """
+    # Convert HxWxC image to a (H*W)xC matrix.
     shape = content.shape
     assert len(shape) == 3
     content = content.reshape(-1, shape[-1]).astype(np.float32)
@@ -63,7 +69,13 @@ def transfer_reinhard(content, reference):
 
 
 def transfer_lhm(content, reference):
-    # Convert HxWx3 image to a (H*W)x3 matrix.
+    """Transfers colors from a reference image to a content image using the
+    Linear Histogram Matching.
+
+    content: NumPy array (HxWxC)
+    reference: NumPy array (HxWxC)
+    """
+    # Convert HxWxC image to a (H*W)xC matrix.
     shape = content.shape
     assert len(shape) == 3
     content = content.reshape(-1, shape[-1]).astype(np.float32)
@@ -90,7 +102,13 @@ def transfer_lhm(content, reference):
 
 
 def transfer_pccm(content, reference):
-    # Convert HxWx3 image to a (H*W)x3 matrix.
+    """Transfers colors from a reference image to a content image using
+    Principal Component Color Matching.
+
+    content: NumPy array (HxWxC)
+    reference: NumPy array (HxWxC)
+    """
+    # Convert HxWxC image to a (H*W)xC matrix.
     shape = content.shape
     assert len(shape) == 3
     content = content.reshape(-1, shape[-1]).astype(np.float32)
@@ -114,8 +132,14 @@ def transfer_pccm(content, reference):
     return result
 
 
-def transfer_rgb(content, reference):
-    # Convert HxWx3 image to a (H*W)x3 matrix.
+def transfer_cws(content, reference):
+    """Transfers colors from a reference image to a content image using
+    channel-wise statistics.
+
+    content: NumPy array (HxWxC)
+    reference: NumPy array (HxWxC)
+    """
+    # Convert HxWxC image to a (H*W)xC matrix.
     shape = content.shape
     assert len(shape) == 3
     content = content.reshape(-1, shape[-1]).astype(np.float32)
@@ -149,7 +173,7 @@ def parse_args(argv):
 
     # Optional arguments
     parser.add_argument(
-        '--method', default='reinhard', choices=METHODS,
+        '--method', default='lhm', choices=METHODS,
         help='Algorithm to use for color transfer.')
 
     # Required arguments
