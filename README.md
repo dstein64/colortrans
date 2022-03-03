@@ -53,10 +53,10 @@ is the path to save the output image.
 
 `METHOD` specifies the color transfer algorithm. The following methods are supported:
 
-1. `lhm` Linear Histogram Matching [1]
-2. `pccm` Principal Components Color Matching [2,3]
-3. `reinhard` Reinhard et al. [4]
-4. `cwct` Channel-Wise Color Transfer
+1. `cwct` Channel-Wise Color Transfer
+2. `lhm` Linear Histogram Matching [1] (default)
+3. `pccm` Principal Components Color Matching [2,3]
+4. `reinhard` Reinhard et al. [4]
 
 If the launcher script was not installed within a directory on your PATH, colorx can be launched by
 passing its module name to Python.
@@ -84,16 +84,16 @@ content = np.array(Image.open('/path/to/content.jpg').convert('RGB'))
 reference = np.array(Image.open('/path/to/reference.jpg').convert('RGB'))
 
 # Transfer colors using different algorithms
+output_cwct = colorx.transfer_cwct(content, reference)
 output_lhm = colorx.transfer_lhm(content, reference)
 output_pccm = colorx.transfer_pccm(content, reference)
 output_reinhard = colorx.transfer_reinhard(content, reference)
-output_cwct = colorx.transfer_cwct(content, reference)
 
 # Save outputs
+Image.fromarray(output_cwct).save('/path/to/output_cwct.jpg')
 Image.fromarray(output_lhm).save('/path/to/output_lhm.jpg')
 Image.fromarray(output_pccm).save('/path/to/output_pccm.jpg')
 Image.fromarray(output_reinhard).save('/path/to/output_reinhard.jpg')
-Image.fromarray(output_cwct).save('/path/to/output_cwct.jpg')
 ```
 
 References
