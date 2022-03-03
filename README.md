@@ -56,7 +56,7 @@ is the path to save the output image.
 
 1. `cwct` Channel-Wise Color Transfer
 2. `lhm` Linear Histogram Matching [1] (default)
-3. `pccm` Principal Components Color Matching [2,3]
+3. `pccm` Principal Components Color Matching [2, 3]
 4. `reinhard` Reinhard et al. [4]
 
 If the launcher script was not installed within a directory on your PATH, colortrans can be launched by
