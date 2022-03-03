@@ -68,7 +68,33 @@ $ python3 -m colorx [--method METHOD] CONTENT REFERENCE OUTPUT
 Library Usage
 -------------
 
-TODO
+The algorithms can also be used directly from Python programs. Each of the methods listed above has
+a corresponding function, `transfer_METHOD`, taking two NumPy arrays corresponding to the content
+and reference image, respectively. The arrays have `HxWxC` data ordering (channels-last).
+
+#### Example
+
+```python
+import colorx
+import numpy as np
+from PIL import Image
+
+# Load data
+content = np.array(Image.open('/path/to/content.jpg').convert('RGB'))
+reference = np.array(Image.open('/path/to/reference.jpg').convert('RGB'))
+
+# Transfer colors using different algorithms
+output_lhm = colorx.transfer_lhm(content, reference)
+output_pccm = colorx.transfer_pccm(content, reference)
+output_reinhard = colorx.transfer_reinhard(content, reference)
+output_cwct = colorx.transfer_cwct(content, reference)
+
+# Save outputs
+Image.fromarray(output_lhm).save('/path/to/output_lhm.jpg')
+Image.fromarray(output_pccm).save('/path/to/output_pccm.jpg')
+Image.fromarray(output_reinhard).save('/path/to/output_reinhard.jpg')
+Image.fromarray(output_cwct).save('/path/to/output_cwct.jpg')
+```
 
 References
 ----------
