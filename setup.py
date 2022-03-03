@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
 
-version_txt = os.path.join(os.path.dirname(__file__), 'colorx', 'version.txt')
+version_txt = os.path.join(os.path.dirname(__file__), 'colortrans', 'version.txt')
 with open(version_txt, 'r') as f:
     version = f.read().strip()
 
