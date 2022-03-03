@@ -132,7 +132,7 @@ def transfer_pccm(content, reference):
     return result
 
 
-def transfer_cws(content, reference):
+def transfer_cwct(content, reference):
     """Transfers colors from a reference image to a content image using
     channel-wise color transfer.
 
