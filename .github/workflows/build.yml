@@ -55,4 +55,8 @@ jobs:
 
     - name: Test
       run: |
-        colorx CONTENT REFERENCE OUTPUT
+        wget https://user-images.githubusercontent.com/541289/156629656-6ee4803a-ddd4-4e96-8e19-e1324bcb03da.jpg \
+          -O content.jpg
+        wget https://user-images.githubusercontent.com/541289/156629708-b1311906-9a34-4296-840c-58429f9a22d3.jpg \
+          -O reference.jpg
+        colorx content.jpg reference.jpg output.jpg
