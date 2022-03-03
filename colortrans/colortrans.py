@@ -172,7 +172,7 @@ def transfer_reinhard(content, reference):
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(
-        prog='colorx',
+        prog='colortrans',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 

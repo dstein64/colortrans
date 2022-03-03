@@ -1,21 +1,21 @@
 [![build][badge_thumbnail]][badge_link]
 
-# colorx
+# colortrans
 
 An implementation of various algorithms for transferring the colors from a reference image to a
 content image while preserving the qualitative appearance of the content image (i.e., color
 transfer).
 
 <div align="center">
-  <a href="https://github.com/dstein64/media/blob/main/colorx/content.jpg?raw=true">
-    <img src="https://github.com/dstein64/media/blob/main/colorx/content_thumbnail.jpg?raw=true" height="218"/>
+  <a href="https://github.com/dstein64/media/blob/main/colortrans/content.jpg?raw=true">
+    <img src="https://github.com/dstein64/media/blob/main/colortrans/content_thumbnail.jpg?raw=true" height="218"/>
   </a>
-  <a href="https://github.com/dstein64/media/blob/main/colorx/reference.jpg?raw=true">
-    <img src="https://github.com/dstein64/media/blob/main/colorx/reference_thumbnail.jpg?raw=true" height="218"/>
+  <a href="https://github.com/dstein64/media/blob/main/colortrans/reference.jpg?raw=true">
+    <img src="https://github.com/dstein64/media/blob/main/colortrans/reference_thumbnail.jpg?raw=true" height="218"/>
   </a>
   <br>
-  <a href="https://github.com/dstein64/media/blob/main/colorx/output.jpg?raw=true">
-    <img src="https://github.com/dstein64/media/blob/main/colorx/output_thumbnail.jpg?raw=true" width="710"/>
+  <a href="https://github.com/dstein64/media/blob/main/colortrans/output.jpg?raw=true">
+    <img src="https://github.com/dstein64/media/blob/main/colortrans/output_thumbnail.jpg?raw=true" width="710"/>
   </a>
 </div>
 
@@ -29,13 +29,13 @@ Installation
 #### Install
 
 ```sh
-$ pip3 install colorx
+$ pip3 install colortrans
 ```
 
 #### Update
 
 ```sh
-$ pip3 install --upgrade colorx
+$ pip3 install --upgrade colortrans
 ```
 
 Command-Line Usage
@@ -46,7 +46,7 @@ The program can be used from the command line.
 The general command line usage is shown below.
 
 ```sh
-$ colorx [--method METHOD] CONTENT REFERENCE OUTPUT
+$ colortrans [--method METHOD] CONTENT REFERENCE OUTPUT
 ```
 
 `CONTENT` is the path to the content image, `REFERENCE` is the path to the style image, and `OUTPUT`
@@ -59,11 +59,11 @@ is the path to save the output image.
 3. `pccm` Principal Components Color Matching [2,3]
 4. `reinhard` Reinhard et al. [4]
 
-If the launcher script was not installed within a directory on your PATH, colorx can be launched by
+If the launcher script was not installed within a directory on your PATH, colortrans can be launched by
 passing its module name to Python.
 
 ```sh
-$ python3 -m colorx [--method METHOD] CONTENT REFERENCE OUTPUT
+$ python3 -m colortrans [--method METHOD] CONTENT REFERENCE OUTPUT
 ```
 
 Library Usage
@@ -76,7 +76,7 @@ and reference image, respectively. The arrays have `HxWxC` data ordering (channe
 #### Example
 
 ```python
-import colorx
+import colortrans
 import numpy as np
 from PIL import Image
 
@@ -85,10 +85,10 @@ content = np.array(Image.open('/path/to/content.jpg').convert('RGB'))
 reference = np.array(Image.open('/path/to/reference.jpg').convert('RGB'))
 
 # Transfer colors using different algorithms
-output_cwct = colorx.transfer_cwct(content, reference)
-output_lhm = colorx.transfer_lhm(content, reference)
-output_pccm = colorx.transfer_pccm(content, reference)
-output_reinhard = colorx.transfer_reinhard(content, reference)
+output_cwct = colortrans.transfer_cwct(content, reference)
+output_lhm = colortrans.transfer_lhm(content, reference)
+output_pccm = colortrans.transfer_pccm(content, reference)
+output_reinhard = colortrans.transfer_reinhard(content, reference)
 
 # Save outputs
 Image.fromarray(output_cwct).save('/path/to/output_cwct.jpg')
@@ -113,5 +113,5 @@ International Conference on Image Processing 2005, 2:II–5, 2005.
 [4] Reinhard, Erik, Michael Adhikhmin, Bruce Gooch, and Peter Shirley. "Color Transfer between
 Images." IEEE Computer Graphics and Applications 21, no. 5 (July 2001): 34–41.
 
-[badge_link]: https://github.com/dstein64/colorx/actions/workflows/build.yml
-[badge_thumbnail]: https://github.com/dstein64/colorx/actions/workflows/build.yml/badge.svg
+[badge_link]: https://github.com/dstein64/colortrans/actions/workflows/build.yml
+[badge_thumbnail]: https://github.com/dstein64/colortrans/actions/workflows/build.yml/badge.svg
