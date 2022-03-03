@@ -1,0 +1,42 @@
+name: packages
+# When the 'permissions' key is specified, unspecified permission scopes (e.g.,
+# actions, checks, etc.) are set to no access (none).
+permissions:
+  contents: read
+on:
+  workflow_dispatch:
+    inputs:
+      # When git-ref is empty, HEAD will be checked out.
+      git-ref:
+        description: Optional git ref (branch, tag, or full SHA)
+        required: false
+
+jobs:
+  packages:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clone
+      uses: actions/checkout@v3
+      with:
+        # When the ref is empty, HEAD will be checked out.
+        ref: ${{ github.event.inputs.git-ref }}
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Dependencies
+      run: python -m pip install --upgrade pip wheel
+
+    - name: Build
+      run: |
+        python setup.py sdist
+        python setup.py bdist_wheel
+
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: packages
+        path: ./dist
