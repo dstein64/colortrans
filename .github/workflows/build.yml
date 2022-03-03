@@ -55,6 +55,6 @@ jobs:
 
     - name: Test
       run: |
-        colorx --help
+        colortrans --help
         cd tests  # so package is imported from site-packages instead of working directory
         python -m unittest discover . -v

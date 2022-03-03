@@ -12,7 +12,7 @@ np.random.seed(0)
 
 
 class TestColorTrans(unittest.TestCase):
-    """colorx tests"""
+    """colortrans tests"""
     def test_colortrans(self):
         content = np.random.randint(256, size=(20, 30, 3), dtype=np.uint8)
         reference = np.random.randint(256, size=(40, 50, 3), dtype=np.uint8)
@@ -29,10 +29,10 @@ class TestColorTrans(unittest.TestCase):
                 output_path = os.path.join(tmp, 'output.png')
                 Image.fromarray(content).save(content_path)
                 Image.fromarray(reference).save(reference_path)
-                argv = ['colorx', content_path, reference_path, output_path, '--method', method]
+                argv = ['colortrans', content_path, reference_path, output_path, '--method', method]
                 colortrans.colortrans.main(argv)
                 self.assertTrue(np.array_equal(np.array(Image.open(output_path)), output))
-                argv = ['colorx', content_path, reference_path, output_path]
+                argv = ['colortrans', content_path, reference_path, output_path]
                 colortrans.colortrans.main(argv)
                 assert_func = self.assertTrue if method == 'lhm' else self.assertFalse
                 assert_func(np.array_equal(np.array(Image.open(output_path)), output))
