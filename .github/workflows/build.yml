@@ -55,10 +55,6 @@ jobs:
 
     - name: Test
       run: |
-        wget https://github.com/dstein64/media/blob/main/colorx/content_thumbnail.jpg?raw=true -O content.jpg
-        wget https://github.com/dstein64/media/blob/main/colorx/reference_thumbnail.jpg?raw=true -O reference.jpg
-        colorx content.jpg reference.jpg output.jpg
-        colorx --method cwct content.jpg reference.jpg output-cwct.jpg
-        colorx --method lhm content.jpg reference.jpg output-lhm.jpg
-        colorx --method pccm content.jpg reference.jpg output-pccm.jpg
-        colorx --method reinhard content.jpg reference.jpg output-reinhard.jpg
+        colorx --help
+        cd tests  # so package is imported from site-packages instead of working directory
+        python -m unittest discover . -v
