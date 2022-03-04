@@ -8,14 +8,14 @@ transfer).
 
 <div align="center">
   <a href="https://github.com/dstein64/media/blob/main/colortrans/content.jpg?raw=true">
-    <img src="https://github.com/dstein64/media/blob/main/colortrans/content_thumbnail.jpg?raw=true" height="218"/>
+    <img src="https://github.com/dstein64/media/blob/main/colortrans/content_thumbnail.jpg?raw=true" height="164"/>
   </a>
   <a href="https://github.com/dstein64/media/blob/main/colortrans/reference.jpg?raw=true">
-    <img src="https://github.com/dstein64/media/blob/main/colortrans/reference_thumbnail.jpg?raw=true" height="218"/>
+    <img src="https://github.com/dstein64/media/blob/main/colortrans/reference_thumbnail.jpg?raw=true" height="164"/>
   </a>
   <br>
   <a href="https://github.com/dstein64/media/blob/main/colortrans/output.jpg?raw=true">
-    <img src="https://github.com/dstein64/media/blob/main/colortrans/output_thumbnail.jpg?raw=true" width="710"/>
+    <img src="https://github.com/dstein64/media/blob/main/colortrans/output_thumbnail.jpg?raw=true" width="533"/>
   </a>
 </div>
 
