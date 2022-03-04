@@ -15,7 +15,7 @@ transfer).
   </a>
   <br>
   <a href="https://github.com/dstein64/media/blob/main/colortrans/output.jpg?raw=true">
-    <img src="https://github.com/dstein64/media/blob/main/colortrans/output_thumbnail.jpg?raw=true" width="535"/>
+    <img src="https://github.com/dstein64/media/blob/main/colortrans/output_thumbnail.jpg?raw=true" width="536"/>
   </a>
 </div>
 
