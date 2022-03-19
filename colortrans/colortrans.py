@@ -6,40 +6,11 @@ import os
 from PIL import Image
 
 
-METHODS = ('cwct', 'lhm', 'pccm', 'reinhard')
+METHODS = ('lhm', 'pccm', 'reinhard')
 
 version_txt = os.path.join(os.path.dirname(__file__), 'version.txt')
 with open(version_txt, 'r') as f:
     __version__ = f.read().strip()
-
-
-def transfer_cwct(content, reference):
-    """Transfers colors from a reference image to a content image using
-    channel-wise color transfer.
-
-    content: NumPy array (HxWxC)
-    reference: NumPy array (HxWxC)
-    """
-    # Convert HxWxC image to a (H*W)xC matrix.
-    shape = content.shape
-    assert len(shape) == 3
-    content = content.reshape(-1, shape[-1]).astype(np.float32)
-    reference = reference.reshape(-1, shape[-1]).astype(np.float32)
-
-    mu_content = np.mean(content, axis=0)
-    mu_reference = np.mean(reference, axis=0)
-
-    std_source = np.std(content, axis=0)
-    std_target = np.std(reference, axis=0)
-
-    result = content - mu_content
-    result *= std_target
-    result /= std_source
-    result += mu_reference
-    # Restore image dimensions.
-    result = result.reshape(shape).clip(0, 255).round().astype(np.uint8)
-
-    return result
 
 
 def transfer_lhm(content, reference):
