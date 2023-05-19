@@ -80,8 +80,10 @@ import numpy as np
 from PIL import Image
 
 # Load data
-content = np.array(Image.open('/path/to/content.jpg').convert('RGB'))
-reference = np.array(Image.open('/path/to/reference.jpg').convert('RGB'))
+with Image.open('/path/to/content.jpg') as img:
+    content = np.array(img.convert('RGB'))
+with Image.open('/path/to/reference.jpg') as img:
+    reference = np.array(img.convert('RGB'))
 
 # Transfer colors using different algorithms
 output_lhm = colortrans.transfer_lhm(content, reference)

@@ -31,11 +31,13 @@ class TestColorTrans(unittest.TestCase):
                 Image.fromarray(reference).save(reference_path)
                 argv = ['colortrans', content_path, reference_path, output_path, '--method', method]
                 colortrans.colortrans.main(argv)
-                self.assertTrue(np.array_equal(np.array(Image.open(output_path)), output))
+                with Image.open(output_path) as img:
+                    self.assertTrue(np.array_equal(np.array(img), output))
                 argv = ['colortrans', content_path, reference_path, output_path]
                 colortrans.colortrans.main(argv)
                 assert_func = self.assertTrue if method == 'lhm' else self.assertFalse
-                assert_func(np.array_equal(np.array(Image.open(output_path)), output))
+                with Image.open(output_path) as img:
+                    assert_func(np.array_equal(np.array(img), output))
 
 
 if __name__ == '__main__':
