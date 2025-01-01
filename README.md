@@ -24,7 +24,7 @@ Installation
 
 #### Requirements
 
-- Python 3.7 or greater (earlier versions may work, but are not tested)
+- Python 3.8 or greater (earlier versions may work, but are not tested)
 
 #### Install
 
