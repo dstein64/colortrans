@@ -30,8 +30,8 @@ def transfer_lhm(content, reference):
         eig_val, eig_vec = np.linalg.eig(X)
         return eig_vec.dot(np.diag(np.sqrt(eig_val))).dot(eig_vec.T)
 
-    mu_content = np.mean(content, axis=0)
-    mu_reference = np.mean(reference, axis=0)
+    mu_content = np.mean(content, axis=0, dtype=np.float64)
+    mu_reference = np.mean(reference, axis=0, dtype=np.float64)
 
     cov_content = np.cov(content, rowvar=False)
     cov_reference = np.cov(reference, rowvar=False)
@@ -59,8 +59,8 @@ def transfer_pccm(content, reference):
     content = content.reshape(-1, shape[-1]).astype(np.float32)
     reference = reference.reshape(-1, shape[-1]).astype(np.float32)
 
-    mu_content = np.mean(content, axis=0)
-    mu_reference = np.mean(reference, axis=0)
+    mu_content = np.mean(content, axis=0, dtype=np.float64)
+    mu_reference = np.mean(reference, axis=0, dtype=np.float64)
 
     cov_content = np.cov(content, rowvar=False)
     cov_reference = np.cov(reference, rowvar=False)
@@ -120,11 +120,11 @@ def transfer_reinhard(content, reference):
     lab_content = np.log10(np.maximum(1.0, content.dot(m1))).dot(m2)
     lab_reference = np.log10(np.maximum(1.0, reference.dot(m1))).dot(m2)
 
-    mu_content = lab_content.mean(axis=0)
-    mu_reference = lab_reference.mean(axis=0)
+    mu_content = lab_content.mean(axis=0, dtype=np.float64)
+    mu_reference = lab_reference.mean(axis=0, dtype=np.float64)
 
-    std_source = np.std(content, axis=0)
-    std_target = np.std(reference, axis=0)
+    std_source = np.std(content, axis=0, dtype=np.float64)
+    std_target = np.std(reference, axis=0, dtype=np.float64)
 
     result = lab_content - mu_content
     result *= std_target
