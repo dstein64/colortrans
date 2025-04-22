@@ -13,25 +13,28 @@ with open(version_txt, 'r') as f:
     __version__ = f.read().strip()
 
 
-def transfer_lhm(content, reference):
+def transfer_lhm(content, reference, single_precision=False):
     """Transfers colors from a reference image to a content image using the
     Linear Histogram Matching.
 
     content: NumPy array (HxWxC)
     reference: NumPy array (HxWxC)
+    single_precision: boolean specifying whether to use 32-bit floats instead of 64-bit floats
+      (defaults to False)
     """
     # Convert HxWxC image to a (H*W)xC matrix.
     shape = content.shape
     assert len(shape) == 3
-    content = content.reshape(-1, shape[-1]).astype(np.float32)
-    reference = reference.reshape(-1, shape[-1]).astype(np.float32)
+    dtype = np.float32 if single_precision else np.float64
+    content = content.reshape(-1, shape[-1]).astype(dtype)
+    reference = reference.reshape(-1, shape[-1]).astype(dtype)
 
     def matrix_sqrt(X):
         eig_val, eig_vec = np.linalg.eig(X)
         return eig_vec.dot(np.diag(np.sqrt(eig_val))).dot(eig_vec.T)
 
-    mu_content = np.mean(content, axis=0, dtype=np.float64)
-    mu_reference = np.mean(reference, axis=0, dtype=np.float64)
+    mu_content = np.mean(content, axis=0)
+    mu_reference = np.mean(reference, axis=0)
 
     cov_content = np.cov(content, rowvar=False)
     cov_reference = np.cov(reference, rowvar=False)
@@ -46,21 +49,24 @@ def transfer_lhm(content, reference):
     return result
 
 
-def transfer_pccm(content, reference):
+def transfer_pccm(content, reference, single_precision=False):
     """Transfers colors from a reference image to a content image using
     Principal Component Color Matching.
 
     content: NumPy array (HxWxC)
     reference: NumPy array (HxWxC)
+    single_precision: boolean specifying whether to use 32-bit floats instead of 64-bit floats
+      (defaults to False)
     """
     # Convert HxWxC image to a (H*W)xC matrix.
     shape = content.shape
     assert len(shape) == 3
-    content = content.reshape(-1, shape[-1]).astype(np.float32)
-    reference = reference.reshape(-1, shape[-1]).astype(np.float32)
+    dtype = np.float32 if single_precision else np.float64
+    content = content.reshape(-1, shape[-1]).astype(dtype)
+    reference = reference.reshape(-1, shape[-1]).astype(dtype)
 
-    mu_content = np.mean(content, axis=0, dtype=np.float64)
-    mu_reference = np.mean(reference, axis=0, dtype=np.float64)
+    mu_content = np.mean(content, axis=0)
+    mu_reference = np.mean(reference, axis=0)
 
     cov_content = np.cov(content, rowvar=False)
     cov_reference = np.cov(reference, rowvar=False)
@@ -77,18 +83,21 @@ def transfer_pccm(content, reference):
     return result
 
 
-def transfer_reinhard(content, reference):
+def transfer_reinhard(content, reference, single_precision=False):
     """Transfers colors from a reference image to a content image using the
     technique from Reinhard et al.
 
     content: NumPy array (HxWxC)
     reference: NumPy array (HxWxC)
+    single_precision: boolean specifying whether to use 32-bit floats instead of 64-bit floats
+      (defaults to False)
     """
     # Convert HxWxC image to a (H*W)xC matrix.
     shape = content.shape
     assert len(shape) == 3
-    content = content.reshape(-1, shape[-1]).astype(np.float32)
-    reference = reference.reshape(-1, shape[-1]).astype(np.float32)
+    dtype = np.float32 if single_precision else np.float64
+    content = content.reshape(-1, shape[-1]).astype(dtype)
+    reference = reference.reshape(-1, shape[-1]).astype(dtype)
 
     m1 = np.array([
         [0.3811, 0.1967, 0.0241],
@@ -120,11 +129,11 @@ def transfer_reinhard(content, reference):
     lab_content = np.log10(np.maximum(1.0, content.dot(m1))).dot(m2)
     lab_reference = np.log10(np.maximum(1.0, reference.dot(m1))).dot(m2)
 
-    mu_content = lab_content.mean(axis=0, dtype=np.float64)
-    mu_reference = lab_reference.mean(axis=0, dtype=np.float64)
+    mu_content = lab_content.mean(axis=0)
+    mu_reference = lab_reference.mean(axis=0)
 
-    std_source = np.std(content, axis=0, dtype=np.float64)
-    std_target = np.std(reference, axis=0, dtype=np.float64)
+    std_source = np.std(content, axis=0)
+    std_target = np.std(reference, axis=0)
 
     result = lab_content - mu_content
     result *= std_target
@@ -151,6 +160,14 @@ def parse_args(argv):
     parser.add_argument(
         '--method', default='lhm', choices=METHODS,
         help='Algorithm to use for color transfer.')
+    parser.add_argument(
+        '--single-precision', action='store_true', help='Use 32-bit floats instead of 64-bit floats.'
+    )
+    parser.add_argument(
+        '--max-image-pixels', type=int, default=Image.MAX_IMAGE_PIXELS,
+        help='Maximum number of pixels for Python Imaging Library (PIL.Image.MAX_IMAGE_PIXELS).'
+             ' Set to -1 for no limit.'
+    )
 
     # Required arguments
     parser.add_argument('content', help='Path to content image (qualitative appearance).')
@@ -162,17 +179,18 @@ def parse_args(argv):
     return args
 
 
-def main(argv=sys.argv):
+def _main(argv=sys.argv):
     args = parse_args(argv)
+    Image.MAX_IMAGE_PIXELS = args.max_image_pixels if args.max_image_pixels > -1 else None
     content_img = Image.open(args.content).convert('RGB')
     # The slicing is to remove transparency channels if they exist.
     content = np.array(content_img)[:, :, :3]
     reference_img = Image.open(args.reference).convert('RGB')
     reference = np.array(reference_img)[:, :, :3]
     transfer = globals()[f'transfer_{args.method}']
-    output = transfer(content, reference)
+    output = transfer(content, reference, single_precision=args.single_precision)
     Image.fromarray(output).save(args.output)
 
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv))
+    sys.exit(_main(sys.argv))

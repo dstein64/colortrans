@@ -46,7 +46,7 @@ The program can be used from the command line.
 The general command line usage is shown below.
 
 ```sh
-$ colortrans [--method METHOD] CONTENT REFERENCE OUTPUT
+$ colortrans [--method METHOD] [--single-precision] CONTENT REFERENCE OUTPUT
 ```
 
 `CONTENT` is the path to the content image, `REFERENCE` is the path to the style image, and `OUTPUT`
@@ -57,6 +57,8 @@ is the path to save the output image.
 1. `lhm` Linear Histogram Matching [1] (default)
 2. `pccm` Principal Components Color Matching [2, 3]
 3. `reinhard` Reinhard et al. [4]
+
+If the optional `--single-precision` flag is present, 32-bit floats will be used instead of 64-bit floats.
 
 If the launcher script was not installed within a directory on your PATH, colortrans can be launched by
 passing its module name to Python.
@@ -70,7 +72,9 @@ Library Usage
 
 The algorithms can also be used directly from Python programs. Each of the methods listed above has
 a corresponding function, `transfer_METHOD`, taking two NumPy arrays corresponding to the content
-and reference image, respectively. The arrays have `HxWxC` data ordering (channels-last).
+and reference image, respectively. The arrays have `HxWxC` data ordering (channels-last). The functions
+also take an optional keyword argument, `single_precision`, a boolean that specifies whether 32-bit
+floats will be used instead of 64-bit floats (defaults to `False`).
 
 #### Example
 
