@@ -26,7 +26,7 @@ setup(
     ],
     description='An implementation of various color transfer algorithms',
     entry_points={
-        'console_scripts': ['colortrans=colortrans.colortrans:main'],
+        'console_scripts': ['colortrans=colortrans.colortrans:_main'],
     },
     keywords=['color', 'color-transfer'],
     license='MIT',
