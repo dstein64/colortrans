@@ -1,6 +1,6 @@
 import sys
 
-from colortrans.colortrans import main
+from colortrans.colortrans import _main
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(_main())
